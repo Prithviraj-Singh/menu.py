@@ -123,13 +123,14 @@ while True:
 			elif int(had) == 7:
 				stop()
 			elif int(had) == 8:
-				os.system("hadoop fs -ls")
+				x = input("Enter the name of any specific folder name on HDFS which you'd like to list in: /")
+				os.system("hadoop fs -ls /{}".format(x))
 			elif int(had) == 9:
-				x = input("Enter the file's path on HDFS:")
+				x = input("Enter the file's path on HDFS: /")
 				os.system("hadoop fs -cat /{}".format(x))
 			elif int(had) == 10:
 				x = input("Enter the file's path which you'd like to upload:")
-				y = input("Enter the location in HDFS where you'd like to upload the file")
+				y = input("Any specific folder where you'd like to upload your file")
 				os.system("hadoop fs -put {} /{}".format(x,y))
 			elif int(had) == 11:
 				os.system("tput setaf 2")
