@@ -82,7 +82,7 @@ while True:
 				a = open("/etc/hadoop/core-site.xml","r")
 				b = a.readlines()
 				ip = input("what is the ip address of the master : ")
-				b.insert(6,"<property>\n<name>fs.default.name</name>\n<value>hdfs://{}/:9001</value>\n</property>".format(ip))
+				b.insert(6,"<property>\n<name>fs.default.name</name>\n<value>hdfs://{}:9001</value>\n</property>".format(ip))
 				a = open("/etc/hadoop/core-site.xml","w")
 				a.writelines(b)
 				a.close()
