@@ -1,7 +1,8 @@
 import os
 import subprocess as sp
-
-os.system("sudo su - root")
+x = input("Are you logged in as root???[y/n]")
+if "n" in x:
+	os.system("sudo su - root")
 epel = sp.getoutput("rpm -qa | grep epel")
 if epel != "epel-release-8-8.el8.noarch":
     print(epel)
