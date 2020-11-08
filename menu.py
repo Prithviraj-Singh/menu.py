@@ -1,8 +1,9 @@
 import os
 import subprocess as sp
+
 x = input("Are you logged in as root???[y/n]")
 if "n" in x:
-	os.system("sudo su - root")
+    os.system("sudo su - root")
 epel = sp.getoutput("rpm -qa | grep epel")
 if epel != "epel-release-8-8.el8.noarch":
     print(epel)
@@ -17,8 +18,9 @@ while True:
 
     print("""
 		PRESS 1: to run date
-		PRESS 2: for Hadoop Configuration
-		PRESS 3: for AWS Configuration
+		PRESS 2: for Hadoop Configuration Automation Tool
+		PRESS 3: for AWS Configuration Automation Tool
+		PRESS 4: for Linux Automation Tool
 	""")
     os.system("tput setaf 1")
     print("\t\tPRESS 11: to exit")
@@ -151,9 +153,9 @@ while True:
                 print("Command not found")
 
     elif int(ch) == 3:
-    
+
         def new_instance():  # function for creation of new instance
-    
+
             a = 0
             while a == 0:
                 print("""
@@ -182,7 +184,8 @@ while True:
                         new_instance()
                 if int(choice) == 2:
                     name = input("Enter security group name of your choice")
-                    cmd2 = "aws ec2 create-security-group --group-name {0} --description \"security group\" ".format(name)
+                    cmd2 = "aws ec2 create-security-group --group-name {0} --description \"security group\" ".format(
+                        name)
                     check1 = sp.getstatusoutput(cmd2)
                     status2 = check1[0]
                     out2 = check1[1]
@@ -209,13 +212,13 @@ while True:
                         print("Instance id {0} Launched Successfully".format(image))
                     else:
                         print("Error Occured: {0}".format(out3))
-    
+
                 elif int(choice) == 4:
                     break
-    
-    
+
+
         # Here the Create_Instance Function Ends....
-    
+
         def start_stop():  # Function for starting and stoping the running instance
             b = 0
             while b == 0:
@@ -275,10 +278,10 @@ while True:
                         start_stop()
                 if int(ch1) == 3:
                     break
-    
-    
+
+
         # Here the funtion start/stop() ends.....
-    
+
         def ebsblock():  # Function to create EBS Volume
             c = 0
             while c == 0:
@@ -305,7 +308,7 @@ while True:
                     else:
                         print("Something went wront...!")
                         ebsblock()
-    
+
                 if int(ch3) == 2:
                     cmd9 = "aws ec2 describe-instances"
                     display2 = sp.getstatusoutput(cmd9)
@@ -319,13 +322,14 @@ while True:
                     print("{}".format(out10))
                     volume = input("Enter Volume id you want to attach to instance: ")
                     device = input("Enter Device name:")
-                    cmd11 = "aws ec2 attach-volume --instance-id {0} --volume-id {1} --device {2}".format(select4, volume,
+                    cmd11 = "aws ec2 attach-volume --instance-id {0} --volume-id {1} --device {2}".format(select4,
+                                                                                                          volume,
                                                                                                           device)
                     check5 = sp.getstatusoutput(cmd11)
                     out11 = check5[1]
                     print("{0}".format(out11))
                     ebsblock()
-    
+
                 if int(ch3) == 3:
                     cmd12 = "aws ec2 describe-volumes"
                     display3 = sp.getstatusoutput(cmd12)
@@ -339,7 +343,7 @@ while True:
                     out13 = check6[1]
                     print("Detach Status: \n {}".format(out13))
                     ebsblock()
-    
+
                 if int(ch3) == 4:
                     cmd15 = "aws ec2 describe-volumes"
                     display4 = sp.getstatusoutput(cmd15)
@@ -351,13 +355,13 @@ while True:
                     out14 = check7[1]
                     print("Delete Status: \n {}".format(out14))
                     ebsblock()
-    
+
                 if int(ch3) == 5:
                     break
-    
-    
+
+
         # End of EBS Volume....
-    
+
         def s3_bucket():
             d = 0
             while d == 0:
@@ -369,7 +373,7 @@ while True:
             ___________________________________________________________
                         """)
                 ch4 = input("Enter your choice : ")
-    
+
                 if int(ch4) == 1:
                     select7 = input("Enter a unique name for S3 Bucket: ")
                     region = input("Enter region name eg(ap-south-1) : ")
@@ -378,11 +382,12 @@ while True:
                         select7, region, location)
                     check8 = sp.getstatusoutput(cmd16)
                     out16 = check8[1]
-    
-                    print(" S3 Bucket with name {0} created successfully in the region {1} : \n {2}".format(select7, region,
+
+                    print(" S3 Bucket with name {0} created successfully in the region {1} : \n {2}".format(select7,
+                                                                                                            region,
                                                                                                             out16))
                     s3_bucket()
-    
+
                 if int(ch4) == 2:
                     select7 = input("Enter the absolute location of file eg (C:/User/Desktop/filename): ")
                     cmd17 = "aws s3 ls"
@@ -395,7 +400,7 @@ while True:
                     out18 = check10[1]
                     print("Status : \n {0} ".format(out18))
                     s3_bucket()
-    
+
                 if int(ch4) == 3:
                     cmd19 = "aws s3 ls"
                     check11 = sp.getstatusoutput(cmd19)
@@ -412,13 +417,13 @@ while True:
                     out21 = check13[1]
                     print("{}".format(out21))
                     s3_bucket()
-    
+
                 if int(ch4) == 4:
                     break
-    
-    
+
+
         # End of S3_bucket function.....
-    
+
         def cloudfront():
             e = 0
             while e == 0:  # Function for creation of CloudFront
@@ -457,17 +462,17 @@ while True:
                     cloudfront()
                 if int(ch6) == 3:
                     break
-    
-    
+
+
         awscli = sp.getstatusoutput("aws --version")
-    
+
         status = awscli[0]
-    
+
         if status != 0:
             print("AWS CLI is not installed in your system, Kindly install it with below options")
             r = 0
             while r == 0:
-    
+
                 print("""
             *_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*
                 AWS CLI installation module: \n
@@ -489,16 +494,16 @@ while True:
             ___________________________________________________________
                                 """)
                         cli = input("Enter Your choice: ")
-    
+
                         if int(cli) == 1:
                             os.system("pip3 install awscli --upgrade --user")
                             print("If it is not working properly try to install by GUI.")
-    
+
                         elif int(cli) == 2:
                             os.system("curl https://s3.amazonaws.com/aws-cli/awscli-bundle.zip -o awscli-bundle.zip")
                             os.system("unzip awscli-bundle.zip")
                             os.system("sudo ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws")
-    
+
                         elif int(cli) == 3:
                             os.system("curl https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip -o awscliv2.zip")
                             os.system("unzip awscliv2.zip")
@@ -506,10 +511,10 @@ while True:
                             os.system("sudo ./aws/install -i /usr/local/aws-cli -b /usr/local/bin")
                         elif int(cli) == 4:
                             break
-    
+
                 if int(ch7) == 2:
                     os.system("aws --version")
-    
+
                 if int(ch7) == 3:
                     break
             print("If you have'nt configured the AWS CLI, please configure it first before taking 	further choice's")
@@ -528,7 +533,7 @@ while True:
             ___________________________________________________________	
                         """)
                 ch = input("Enter your choice: ")
-    
+
                 if int(ch) == 1:
                     print("Create an IAM User from AWS GUI and there you will get Access key and access password")
                     print("Link: https://aws.amazon.com")
@@ -546,9 +551,9 @@ while True:
                     cloudfront()
                 elif int(ch) == 7:
                     break
-    
+
         else:
-    
+
             v = 0
             while v == 0:
                 os.system("clear")
@@ -565,9 +570,9 @@ while True:
                 Press 7: Exit
             ___________________________________________________________
                         """)
-    
+
                 ch = input("Enter your choice: ")
-    
+
                 if int(ch) == 1:
                     print("Create an IAM User from AWS GUI and there you will get Access key and access password")
                     print("Link: https://aws.amazon.com")
@@ -586,14 +591,187 @@ while True:
                 elif int(ch) == 7:
                     break
 
-    elif int(ch) == 11:
+    elif int(ch) == 4:
+        import getpass as gp
+
+    
+        def yum(name):
+            o = sp.getoutput(name)
+            if "command not found" in o:
+                os.system("echo `yum -q whatprovides {}` > c.txt".format(name))
+                x = open("c.txt", "r")
+                y = x.readlines(1)
+                x = y[0]
+                y = x.rsplit(' ')
+                x = y[0]
+                os.system("yum install {}".format(x))
+
+        v = 0
+        while v == 0:
             os.system("tput setaf 2")
-            print("Exiting...")
+            print("Welcome to Linux automation tool!!!")
             os.system("tput setaf 7")
-            exit()
+            print("""
+        	PRESS 1: to show Present Working Directory (Directory which the user is on)
+        	PRESS 2: to list all the items in Present working directory
+        	PRESS 3: to get a detailed list of items in Present Working Directory
+        	PRESS 4: to change directory
+        	PRESS 5: to make an empty file in Present Working Directory
+        	PRESS 6: to create a directory in Present Working Directory
+        	PRESS 7: to read a file
+        	PRESS 8: to show date
+        	PRESS 9: to show calender
+        	PRESS 10: to show time (hh:mm:ss)
+        	PRESS 12: to show all the processes running in the background
+        	PRESS 13: to bring any background process to foregound
+        	PRESS 14: to add user account
+        	PRESS 15: to see which user you are using
+        	PRESS 16: to open firefox
+        	PRESS 17: to use calculator
+        	PRESS 18: to use do remote login to a system
+        	PRESS 19: to show IP adress
+        	PRESS 20: to show packet exchange
+        	PRESS 21: to show CPU details
+        	PRESS 22: to show Port details
+        	PRESS 23: to Shutdown the system
+        	PRESS 24: to Reboot
+        	PRESS 25: to switch user
+        	PRESS 26: to send a file to a system in the same network
+        	PRESS 27: to give detailes list of harddisk
+        	PRESS 28: to exit to main menu
+        	PRESS 29: to remove something
+        		""")
+            os.system("tput setaf 1")
+            print("PRESS 11: to exit")
+            os.system("tput setaf 7")
+
+            i = input("What would you like the program to do? :")
+            if int(i) == 1:
+                yum("pwd")
+                os.system("pwd")
+            elif int(i) == 2:
+                yum("ls")
+                os.system("ls")
+            elif int(i) == 3:
+                yum("ls")
+                os.system("ls -l")
+            elif int(i) == 4:
+                yum("cd")
+                op = input("Give the path of directory where you'd like to land:")
+                os.system("cd {}".format(op))
+            elif int(i) == 5:
+                yum("touch")
+                op = input("What name should th file have:")
+                os.system("op")
+            elif int(i) == 6:
+                yum("mkdir")
+                os.system("What name should the folder have:")
+            elif int(i) == 7:
+                yum("cat")
+                op = input("Give the name of the file or path of the file:")
+                os.system("cat {}".format(op))
+            elif int(i) == 8:
+                yum("date")
+                os.system("date")
+            elif int(i) == 9:
+                yum("cal")
+                os.system("cal")
+            elif int(i) == 10:
+                yum("date")
+                os.system("date +%T")
+            elif int(i) == 12:
+                yum("jobs")
+                os.system("jobs")
+            elif int(i) == 13:
+                yum("fg")
+                op = input("What the process ID of the process you'd like to bring to the foreground:")
+                os.system("fg {}".format(op))
+            elif int(i) == 14:
+                yum("useradd")
+                op = input("What is the name of New User:")
+                pas = gp.getpass()
+                os.system("useradd {} -p {}".format(op, pas))
+            elif int(i) == 15:
+                yum("whoami")
+                os.system("whoami")
+            elif int(i) == 16:
+                yum("firefox")
+                os.system("firefox")
+            elif int(i) == 17:
+                yum("bc")
+                os.sytem("bc")
+            elif int(i) == 18:
+                yum("ssh")
+                op = input("What's the IP of the system you'd like to ssh to:")
+                os.system("ssh {}".format(op))
+            elif int(i) == 19:
+                yum("ifconfig")
+                os.system("ifconfig enp0s3")
+            elif int(i) == 20:
+                yum("tcpdump")
+                op = input("Would you like to make a file of all th log?[y/n]:")
+                if y in op:
+                    os.system("tcpdump -i enp0s3 -n -w packets.txt")
+                    os.system("tcpdump -r -n packets.txt -x > newpackets.txt")
+                    os.system("cat newpackets.txt")
+                else:
+                    os.system("tcpdump -i -n enp0s3")
+            elif int(i) == 21:
+                yum("lscpu")
+                os.system("lscpu")
+            elif int(i) == 22:
+                yum("netstat")
+                os.system("netstat -tnlp")
+            elif int(i) == 23:
+                yum("init")
+                os.system("init 0")
+            elif int(i) == 24:
+                yum("init")
+                os.system("inti 6")
+            elif int(i) == 25:
+                op = input("Name of the user you'd like to switch to:")
+                yum("su")
+                os.system("su {}".format(su))
+            elif int(i) == 26:
+                yum("scp")
+                op = input("Give the path to the file you'd like to send:")
+                op1 = input("Give the IP of the system you'd like to send the file to:")
+                op2 = input("Location where you'd like to store the file: /")
+                os.system("scp {} {}:/{}".format(op, op1, op2))
+            elif int(i) == 28:
+                v = 1
+                os.system("clear")
+            elif int(i) == 29:
+                op = input("Do you want to remove a file or a directory [f/d]")
+                if "f" in op:
+                    yum("rm")
+                    op1 = input("Name or the path of the file you'd like to remove:")
+                    os.system("rm {}".format(op1))
+                else:
+                    yum("rmdir")
+                    op1 = input("Name or the path of the directory you'd like to remove:")
+                    os.system("rmdir {}".format(op1))
+            elif int(i) == 27:
+                yum("fdisk")
+                op = input("For what harddisk would you like to get the details leave empty for all")
+                os.system("fdisk -l {}".format(op))
+            elif int(i) == 11:
+                exit()
+            else:
+                os.system("tput setaf 1")
+                print("COMMAND NOT FOUND!!!")
+                os.system("tput setaf 7")
+
+
+    elif int(ch) == 11:
+        os.system("tput setaf 2")
+        print("Exiting...")
+        os.system("tput setaf 7")
+        exit()
     else:
         os.system("tput setaf 1")
         print("COMMAND NOT RECOGNIZED!!!")
         os.system("tput setaf 7")
 
-    
+
+
