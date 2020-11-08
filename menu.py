@@ -609,9 +609,12 @@ while True:
         v = 0
         while v == 0:
             os.system("tput setaf 2")
-            print("Welcome to Linux automation tool!!!")
+            print("\t\tWelcome to Linux automation tool!!!")
             os.system("tput setaf 7")
             print("""
+	    
+	    
+	    
         	PRESS 1: to show Present Working Directory (Directory which the user is on)
         	PRESS 2: to list all the items in Present working directory
         	PRESS 3: to get a detailed list of items in Present Working Directory
@@ -642,7 +645,7 @@ while True:
         	PRESS 29: to remove something
         		""")
             os.system("tput setaf 1")
-            print("PRESS 11: to exit")
+            print("\t\tPRESS 11: to exit")
             os.system("tput setaf 7")
 
             i = input("What would you like the program to do? :")
