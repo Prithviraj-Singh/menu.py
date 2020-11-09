@@ -714,7 +714,7 @@ while True:
             elif int(i) == 20:
                 yum("tcpdump")
                 op = input("Would you like to make a file of all th log?[y/n]:")
-                if y in op:
+                if "y" in op:
                     os.system("tcpdump -i enp0s3 -n -w packets.txt")
                     os.system("tcpdump -r -n packets.txt -x > newpackets.txt")
                     os.system("cat newpackets.txt")
