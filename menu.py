@@ -643,6 +643,7 @@ while True:
         	PRESS 27: to give detailes list of harddisk
         	PRESS 28: to exit to main menu
         	PRESS 29: to remove something
+		PRESS 30: to install packages based on command name
         		""")
             os.system("tput setaf 1")
             print("\t\tPRESS 11: to exit")
@@ -760,6 +761,9 @@ while True:
                 os.system("fdisk -l {}".format(op))
             elif int(i) == 11:
                 exit()
+            elif int(i) == 30:
+                op = input("Type the command for which you'd like to install the package")
+                yum(op)
             else:
                 os.system("tput setaf 1")
                 print("COMMAND NOT FOUND!!!")
