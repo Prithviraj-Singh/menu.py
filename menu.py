@@ -21,6 +21,7 @@ while True:
 		PRESS 2: for Hadoop Configuration Automation Tool
 		PRESS 3: for AWS Configuration Automation Tool
 		PRESS 4: for Linux Automation Tool
+		PRESS 5: for Logical Volume Management Automation
 	""")
     os.system("tput setaf 1")
     print("\t\tPRESS 11: to exit")
@@ -594,7 +595,7 @@ while True:
     elif int(ch) == 4:
         import getpass as gp
 
-    
+
         def yum(name):
             o = sp.getoutput(name)
             if "command not found" in o:
@@ -606,15 +607,16 @@ while True:
                 x = y[0]
                 os.system("yum install {}".format(x))
 
+
         v = 0
         while v == 0:
             os.system("tput setaf 2")
             print("\t\tWelcome to Linux automation tool!!!")
             os.system("tput setaf 7")
             print("""
-	    
-	    
-	    
+
+
+
         	PRESS 1: to show Present Working Directory (Directory which the user is on)
         	PRESS 2: to list all the items in Present working directory
         	PRESS 3: to get a detailed list of items in Present Working Directory
@@ -775,10 +777,161 @@ while True:
         print("Exiting...")
         os.system("tput setaf 7")
         exit()
+   
+    elif int(ch) == 5:
+        def lvcreate(i):
+            x = input("What should be the size of your logical volume(Numeric value): ")
+            z = input("What is the unit of your given size: ")
+            if ("m" in z or "M" in z):
+                z = "M"
+            elif ("k" in z or "K" in z):
+                z = "K"
+            else:
+                z = "G"
+            name = input("What should be the name of your lv :")
+            os.system("lvcreate --size {}{} --name {} {}".format(x, z, name, i))
+            ty = input(
+                "In which format type whould you like to format your new Logical volume (recommended/default type 'ext4'): ")
+            if ty == "xfs":
+                os.system("mkfs.xfs /dev/{}/{}".format(i, name))
+            elif (ty == "ext4" or ty == "" or ty == " "):
+                print("Good choice!!!")
+                os.system("mkfs.ext4 /dev/{}/{}".format(i, name))
+            else:
+                print("""Type not supported!!!...
+        Formating in the default format""")
+                os.system("mkfs.ext4 /dev/{}/{}".format(i, name))
+            q = input("Give a suitable name or path of a directory for your Logical Volume: ")
+            os.system("mkdir {}".format(q))
+            os.system("mount /dev/{}/{} {}".format(i, name, q))
+            print("Your Logical Volume {} is ready to be used in the directory {}".format(name, q))
+    
+    
+        def create():
+            print("which harddisk would you like to give lvm capablities")
+            i = input("Enter a suitable name for your volume group: ")
+            y = "vgcreate " + i
+            while (True):
+                z = input("Enter the name of the harddisk or press q to quit: ")
+                if z == "q":
+                    break
+                else:
+                    stat = sp.getoutput("pvcreate {}".format(z))
+                    y += " {}".format(z)
+                    print(stat)
+            os.system(y)
+            opt = input("Do you want to create a Logial Volume[y/n]: ")
+            if "y" in opt:
+                lvcreate(i)
+    
+    
+        os.system("clear")
+        while (True):
+            os.system("tput setaf 5")
+            print("""
+                    Welcome to my LVM menu
+                    ______________________
+            """)
+            os.system("tput setaf 12")
+            print("""
+            PRESS 1: for making a new storage device capable of LVM
+            PRESS 2: for making a new Logical Volume from an existing Volume Group
+            PRESS 3: for showing all storage devices
+            PRESS 4: for showing existing Logical Volumes
+            PRESS 5: for showing existing Physical Volumes
+            PRESS 6: for showing existing Volume Group
+            PRESS 7: for changing space of a prexisting Logical Volume
+            PRESS 8: to exit to main-menu
+            """)
+            os.system("tput setaf 1")
+            print("	Print 11 to Exit")
+            os.system("tput setaf 7")
+            o = input("What would you like the application to do: ")
+            if int(o) == 1:
+                create()
+            elif int(o) == 2:
+                q = input("From which volume group would you like to make the Logical-Volume: ")
+                lvcreate(q)
+            elif int(o) == 3:
+                q = input("Write the name of any particular drive to show details (default  shows all): ")
+                os.system("fdisk -l")
+            elif int(o) == 4:
+                q = input("Write the name of volume group you'd like to see LVs from (default shows all): ")
+                os.system("lvdisplay {}".format(q))
+            elif int(o) == 5:
+                q = input("Write the name of any physical drive to show its details (default shows all): ")
+                os.system("pvdisplay {}".format(q))
+            elif int(o) == 6:
+                q = input("Write the name of a particular VG to show its details (default show all): ")
+                os.system("vgdisplay {}".format(q))
+            elif int(o) == 7:
+                q = input("What is the format type of your Logical Volume (default ext4): ")
+                if q != "xfs":
+                    q1 = input("What would you like to do to the space of your LV[add/sub]")
+                    if "ad" in q1:
+                        q1 = input("How much space would you like to add(enter the numeric value): ")
+                        q2 = input("What is the unit of given size?[M/K/G] : ")
+                        if ("m" in q2 or "M" in q2):
+                            q2 = "M"
+                        elif ("k" in q2 or "K" in q2):
+                            q2 = "K"
+                        else:
+                            q2 = "G"
+                        q = input("Write the complete name of the Logical volume where you'd like to make the changes: ")
+                        os.system("lvextend --size +{}{} {}".format(q1, q2, q))
+                        os.system("resize2fs ()".format(q))
+    
+                    elif "su" in q1:
+                        q1 = input("Write the complete name of the Logical volume where you'd like to make the changes: ")
+                        q = input("Where is the Logical Volume mounted? : ")
+                        q3 = input(
+                            "How much space would you like to remove from the Logical volume (numerical value only): ")
+                        q3 = int(q3)
+                        q2 = input("What is the unit of given space?[M/K/G] : ")
+                        if ("m" in q2 or "M" in q2):
+                            q2 = "M"
+                            q3 = q3 * 1024
+                        elif ("k" in q2 or "K" in q2):
+                            q2 = "K"
+                        else:
+                            q2 = "G"
+                            q3 = q3 * 1024 * 1024
+                        x = sp.getoutput("lvdisplay {}".format(q1))
+                        x = x.rsplit(" ")
+                        size = float(x[158])
+                        x = x[159]
+                        if ("m" in x or "M" in x):
+                            x = "M"
+                            size = size * 1024
+                        elif ("k" in x or "K" in x):
+                            x = "K"
+                        else:
+                            x = "G"
+                            size = size * 1024 * 1024
+                        size = size - q3
+                        size = int(size)
+                        os.system("umount {}".format(q))
+                        os.system("e2fsck -f {}".format(q1))
+                        os.system("resize2fs {} {}K".format(q1, size))
+                        os.system("lvreduce --size -{}K {}".format(q3, q1))
+                        os.system("mount {} {}".format(q1, q))
+                else:
+                    q = input("Where is the device mounted? : ")
+                    q1 = input("How many blocks would like to add to the storage? : ")
+                    os.system("xfs_growfs -D {} {}".format(q1, q))
+            elif int(o) == 8:
+                break
+            elif int(o) == 11:
+                os.system("tput setaf 1")
+                print("Exiting...")
+                os.system("tput setaf 7")
+                exit()
+            else:
+                os.system("tput setaf 1")
+                print("INVALID OPTION!!!")
+                os.system("tput setaf 7")
+
     else:
         os.system("tput setaf 1")
         print("COMMAND NOT RECOGNIZED!!!")
         os.system("tput setaf 7")
-
-
-
