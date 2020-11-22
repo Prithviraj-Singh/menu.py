@@ -844,7 +844,7 @@ while True:
             PRESS 8: to exit to main-menu
             """)
             os.system("tput setaf 1")
-            print("	Print 11 to Exit")
+            print("		PRESS 11 to Exit")
             os.system("tput setaf 7")
             o = input("What would you like the application to do: ")
             if int(o) == 1:
