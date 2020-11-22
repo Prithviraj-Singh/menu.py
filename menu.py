@@ -21,7 +21,7 @@ while True:
 		PRESS 2: for Hadoop Configuration Automation Tool
 		PRESS 3: for AWS Configuration Automation Tool
 		PRESS 4: for Linux Automation Tool
-		PRESS 5: for Logical Volume Management Automation
+		PRESS 5: for Logical Volume Manager Automation
 	""")
     os.system("tput setaf 1")
     print("\t\tPRESS 11: to exit")
