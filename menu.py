@@ -7,7 +7,7 @@ if "n" in x:
 epel = sp.getoutput("rpm -qa | grep epel")
 if epel != "epel-release-8-8.el8.noarch":
     print(epel)
-    os.system("dnf -p install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm")
+    os.system("dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm")
 
 os.system("clear")
 while True:
